@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Counter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<MyApp />);
+
+
+        function MyApp() {
+            const { useState, useEffect } = React
+            const [advice, setAdvice] = useState("");
+            const [count, setCount] = useState(0);
+
+            async function getAdvice() {
+                const res = await fetch("https://api.adviceslip.com/advice");
+                const data = await res.json();
+                setAdvice(data.slip.advice);
+                setCount((c) => c + 1);
+            }
+
+            useEffect(function() {
+                getAdvice();
+            }, []);
+
+            return (
+                <div>
+                    <h1>{advice}</h1>
+                    <button onClick={getAdvice}>Get advice</button>
+                    <Message count={count} />
+                </div>
+            );
+        }
+
+        function Message(props) {
+            return (
+                <p>
+                    You have read <strong>{props.count}</strong> pieces of advice
+                </p>
+            );
+        }
+
+    </script>
+
+</body>
+
+</html>

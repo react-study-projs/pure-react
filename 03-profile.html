@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>profile</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "IBM Plex Mono", sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            margin-bottom: 12px;
+        }
+
+        .card {
+            width: 450px;
+            margin: 40px;
+            border: 4px solid #222;
+        }
+
+        .card::after {
+            content: "";
+            display: block;
+        }
+
+        .avatar {
+            width: 100%;
+            display: block;
+        }
+
+        .data {
+            padding: 32px;
+            padding-top: 24px;
+        }
+
+        .skill-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .skill {
+            padding: 2px 12px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<MyApp />);
+
+
+        const skills = [
+            {
+                skill: "HTML+CSS",
+                level: "advanced",
+                color: "#2662EA"
+            },
+            {
+                skill: "JavaScript",
+                level: "advanced",
+                color: "#EFD81D"
+            },
+            {
+                skill: "Web Design",
+                level: "advanced",
+                color: "#C3DCAF"
+            },
+            {
+                skill: "Git and GitHub",
+                level: "intermediate",
+                color: "#E84F33"
+            },
+            {
+                skill: "React",
+                level: "advanced",
+                color: "#60DAFB"
+            },
+            {
+                skill: "Svelte",
+                level: "beginner",
+                color: "#FF3B00"
+            }
+        ];
+
+        function MyApp() {
+            return (
+                <div className="card">
+                    <Avatar />
+                    <div className="data">
+                        <Intro />
+                        {/* Should contain one Skill component
+        for each web dev skill that you have,
+        customized with props */}
+                        <SkillList />
+                    </div>
+                </div>
+            );
+        }
+        function Avatar() {
+            return <img className="avatar" src="https://e8zj9o.csb.app/jonas.jpeg" alt="Jonas Schmedtmann" />;
+        }
+
+        function Intro() {
+            return (
+                <div>
+                    <h1>Jonas Schmedtmann</h1>
+                    <p>
+                        Full-stack web developer and teacher at Udemy. When not coding or
+                        preparing a course, I like to play board games, to cook (and eat), or to
+                        just enjoy the Portuguese sun at the beach.
+                    </p>
+                </div>
+            )
+        }
+
+        function SkillList() {
+            return (
+                <div className="skill-list">
+                    {skills.map(({ skill, level, color }) => (<Skill skill={skill} level={level} color={color} />))}
+                </div>
+            )
+        }
+
+        function Skill({ skill, level, color }) {
+            return (
+                <div className="skill" style={{ backgroundColor: color }}>
+                    <span>{skill}</span>
+                    <span>
+                        {level === "beginner" && "👶"}
+                        {level === "intermediate" && "👍"}
+                        {level === "advanced" && "💪"}
+                    </span>
+                </div>
+            )
+
+        }
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this page for starting a new React project with JSX:
+      https://react.dev/learn/start-a-new-react-project
+
+      Read this page for adding React with JSX to an existing project:
+      https://react.dev/learn/add-react-to-an-existing-project
+    -->
+</body>
+
+</html>
